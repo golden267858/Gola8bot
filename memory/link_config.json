@@ -1,0 +1,7 @@
+{
+  "active_link": "https://t.me/example_backup1",
+  "backup_links": [
+    "https://t.me/example_backup2"
+  ],
+  "alert_group_id": "-100123456789"
+}
