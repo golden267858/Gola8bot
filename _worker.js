@@ -3,7 +3,7 @@ export default {
     const url = new URL(request.url);
 
     // ==========================================
-    // 1. Webhook 激活开关 (无视墙，直连TG)
+    // 1. Webhook 激活开关
     // ==========================================
     if (url.pathname === '/setup') {
       const BOT_TOKEN = env.BOT_TOKEN;
@@ -17,7 +17,7 @@ export default {
     }
 
     // ==========================================
-    // 2. 接待大厅：拦截消息，扒出客户“真实底裤”
+    // 2. 接待大厅 + S2S 隐形回传雷达
     // ==========================================
     if (url.pathname === '/webhook' && request.method === 'POST') {
       const BOT_TOKEN = env.BOT_TOKEN; 
@@ -27,27 +27,23 @@ export default {
         const update = await request.json();
         
         if (update.message && update.message.text && update.message.text.startsWith('/start')) {
-          // 1. 抓取广告买量的 ClickID
           const parts = update.message.text.split(' ');
           const clickid = parts.length > 1 ? parts[1] : 'Direct_Traffic'; 
 
-          // 2. 扒出该客户在 Telegram 的绝对真实唯一 ID
           const realTgId = update.message.from.id;
-          // 3. 顺手扒出客户的 TG 用户名（如果有的话）
           const username = update.message.from.username ? `@${update.message.from.username}` : '未设置';
 
-          // 组装双语高逼格话术（展示给客户看，也是给客服留底）
           let replyText = `🔥 <b>VIP PREMIUM ACCESS</b> 🔥\n\n`;
           replyText += `🎉 ကြိုဆိုပါတယ်။ သင်၏ကံစမ်းမှုကိုစတင်လိုက်ပါ!\n\n`;
-          
           replyText += `✅ <b>System Record (စနစ်မှတ်တမ်း):</b>\n`;
-          replyText += `▪️ <b>Ad ID (来源追踪):</b> <code>${clickid}</code>\n`;
-          replyText += `▪️ <b>User ID (您的真实ID):</b> <code>${realTgId}</code>\n`;
+          replyText += `▪️ <b>Ad ID:</b> <code>${clickid}</code>\n`;
+          replyText += `▪️ <b>User ID:</b> <code>${realTgId}</code>\n`;
           if (username !== '未设置') {
-             replyText += `▪️ <b>Username (TG账号):</b> ${username}\n`;
+             replyText += `▪️ <b>Username:</b> ${username}\n`;
           }
-          replyText += `\n👇 ကျေးဇူးပြု၍ အောက်ပါခလုတ်ကိုနှိပ်ပါ။ (请点击下方联系人工客服)`;
+          replyText += `\n👇 ကျေးဇူးပြု၍ အောက်ပါခလုတ်ကိုနှိပ်ပါ။`;
 
+          // 动作 A：给客户发欢迎语和客服按钮
           await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -56,11 +52,20 @@ export default {
               text: replyText,
               parse_mode: 'HTML',
               reply_markup: {
-                // 这里已经换成了您的人工客服专属通道！
                 inline_keyboard: [[{ text: "🎧 Customer Service (联系人工客服)", url: "https://t.me/Gold8One" }]]
               }
             })
           });
+
+          // ==========================================
+          // 🔥 动作 B：给 BeMob 发送转化捷报 (S2S Postback) 🔥
+          // ==========================================
+          // 如果 clickid 不是默认词，说明是买量来的，立刻上报转化！
+          if (clickid !== 'Direct_Traffic') {
+            // 已经为您精准替换为真实的 BeMob 回传地址
+            const postbackUrl = `http://6tjzk.bemobtrcks.com/postback?cid=${clickid}`;
+            await fetch(postbackUrl); 
+          }
         }
         return new Response('OK', { status: 200 }); 
       } catch (err) {
@@ -69,7 +74,7 @@ export default {
     }
 
     // ==========================================
-    // 3. 兜底护航：正常访问一律吐出黑金落地页！
+    // 3. 兜底护航：主页展示
     // ==========================================
     return env.ASSETS.fetch(request);
   }
