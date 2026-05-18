@@ -1,4 +1,5 @@
 import requests
+import json
 
 ACCESS_KEY = "366E9F2203B948178F38BC502DF0DF57"
 SECRET_KEY = "geWtZ8207X/lqYBFIRi/QH0hrlidXv4E+DkPvtnxQjbX299JTf36dPjfFkKmEaKHNmpWIcTKYQU7Z699B5/mfw=="
@@ -6,5 +7,9 @@ BASE_URL = "https://api.bemob.com/v1"
 params = {"accessKey": ACCESS_KEY, "secretKey": SECRET_KEY}
 
 # 获取所有 Offers
-r_offer = requests.get(f"{BASE_URL}/offers", params=params)
-print(f"Offers Response: {r_offer.json()}")
+res = requests.get(f"{BASE_URL}/offers", params=params)
+if res.status_code == 200:
+    for offer in res.json()['payload']:
+        print(f"Offer: {offer['name']}, URL: {offer['url']}")
+else:
+    print("Error")
