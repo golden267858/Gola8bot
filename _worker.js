@@ -52,7 +52,7 @@ export default {
               text: replyText,
               parse_mode: 'HTML',
               reply_markup: {
-                inline_keyboard: [[{ text: "🎧 Customer Service (联系人工客服)", url: "https://t.me/Gold8One" }]]
+                inline_keyboard: [[{ text: "🎧 Customer Service", url: "https://t.me/Gold8One" }]]
               }
             })
           });
