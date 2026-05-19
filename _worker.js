@@ -36,19 +36,22 @@ export default {
           const draftText = `👋 မင်္ဂလာပါ！\n` +
                             `Ad ID: ${clickid}\n` +
                             `User ID: ${realTgId}\n` +
-                            `ငွေသွင်းချင်ပါတယ်၊ ပရိုမိုးရှင်းရှိလား။`;
+                            `ငွေသွင်းချင်ပါတယ်၊ ပရိုမိုးရှင်းရှိလား。`;
           
           // 把草稿转成网址可以识别的格式，拼接到客服链接后面
           const encodedDraft = encodeURIComponent(draftText);
           const csLinkWithDraft = `https://t.me/Gold8One?text=${encodedDraft}`;
 
 
-          // 正常展示给客户的欢迎语
+          // 正常展示给客户的欢迎语 (已加回 Username 展示)
           let replyText = `🔥 <b>VIP PREMIUM ACCESS</b> 🔥\n\n`;
           replyText += `🎉 ကြိုဆိုပါတယ်။ သင်၏ကံစမ်းမှုကိုစတင်လိုက်ပါ!\n\n`;
           replyText += `✅ <b>System Record (စနစ်မှတ်တမ်း):</b>\n`;
           replyText += `▪️ <b>Ad ID:</b> <code>${clickid}</code>\n`;
           replyText += `▪️ <b>User ID:</b> <code>${realTgId}</code>\n`;
+          if (username !== '未设置') {
+            replyText += `▪️ <b>Username:</b> ${username}\n`;
+          }
           replyText += `\n👇 ကျေးဇူးပြု၍ အောက်ပါခလုတ်ကိုနှိပ်ပါ။ 👇`;
 
           await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -59,7 +62,6 @@ export default {
               text: replyText,
               parse_mode: 'HTML',
               reply_markup: {
-                // 这里的链接换成了带有草稿参数的神奇链接
                 inline_keyboard: [[{ text: "🎧 Customer Service (联系人工客服)", url: csLinkWithDraft }]]
               }
             })
