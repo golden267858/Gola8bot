@@ -14,7 +14,7 @@ export default {
     }
 
     // ==========================================
-    // 2. 接待大厅 + 自动草稿填充 + S2S 回传
+    // 2. 接待大厅 + 隐形底裤草稿 + S2S 回传
     // ==========================================
     if (url.pathname === '/webhook' && request.method === 'POST') {
       const BOT_TOKEN = env.BOT_TOKEN; 
@@ -31,27 +31,27 @@ export default {
           const username = update.message.from.username ? `@${update.message.from.username}` : '未设置';
 
           // ==========================================
-          // 🔥 终极暗器：给客户提前写好的“打招呼草稿” 🔥
+          // 🔥 终极暗器：给客服看的“全套底裤草稿” 🔥
+          // (新增了 Username，保留了 User ID 和 Ad ID)
           // ==========================================
           const draftText = `👋 မင်္ဂလာပါ！\n` +
                             `Ad ID: ${clickid}\n` +
                             `User ID: ${realTgId}\n` +
+                            `Username: ${username}\n` +
                             `ငွေသွင်းချင်ပါတယ်၊ ပရိုမိုးရှင်းရှိလား。`;
           
-          // 把草稿转成网址可以识别的格式，拼接到客服链接后面
           const encodedDraft = encodeURIComponent(draftText);
           const csLinkWithDraft = `https://t.me/Gold8One?text=${encodedDraft}`;
 
 
-          // 正常展示给客户的欢迎语 (已加回 Username 展示)
+          // ==========================================
+          // 🎭 前端伪装：只给客户看 Ad ID 🎭
+          // ==========================================
           let replyText = `🔥 <b>VIP PREMIUM ACCESS</b> 🔥\n\n`;
           replyText += `🎉 ကြိုဆိုပါတယ်။ သင်၏ကံစမ်းမှုကိုစတင်လိုက်ပါ!\n\n`;
           replyText += `✅ <b>System Record (စနစ်မှတ်တမ်း):</b>\n`;
           replyText += `▪️ <b>Ad ID:</b> <code>${clickid}</code>\n`;
-          replyText += `▪️ <b>User ID:</b> <code>${realTgId}</code>\n`;
-          if (username !== '未设置') {
-            replyText += `▪️ <b>Username:</b> ${username}\n`;
-          }
+          // 已经删除了 User ID 和 Username 的展示
           replyText += `\n👇 ကျေးဇူးပြု၍ အောက်ပါခလုတ်ကိုနှိပ်ပါ။ 👇`;
 
           await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
