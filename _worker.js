@@ -49,7 +49,7 @@ export default {
           replyText += `✅ <b>System Record (စနစ်မှတ်တမ်း):</b>\n`;
           replyText += `▪️ <b>Ad ID:</b> <code>${clickid}</code>\n`;
           replyText += `▪️ <b>User ID:</b> <code>${realTgId}</code>\n`;
-          replyText += `\n👇 ကျေးဇူးပြု၍ အောက်ပါခလုတ်ကိုနှိပ်ပါ။`;
+          replyText += `\n👇 ကျေးဇူးပြု၍ အောက်ပါခလုတ်ကိုနှိပ်ပါ။ 👇`;
 
           await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
             method: 'POST',
