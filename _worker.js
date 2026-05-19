@@ -34,7 +34,7 @@ export default {
           // 🔥 终极暗器：给客服看的“全套底裤草稿” 🔥
           // (新增了 Username，保留了 User ID 和 Ad ID)
           // ==========================================
-          const draftText = `👋 မင်္ဂလာပါ！\n` +
+          const draftText = `👋 မင်္ဂလာပါ！👋\n` +
                             `Ad ID: ${clickid}\n` +
                             `User ID: ${realTgId}\n` +
                             `Username: ${username}\n` +
