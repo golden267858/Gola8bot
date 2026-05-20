@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>GOLD 8 VIP PREMIUM</title>
     <style>
-        /* 极致精简，防止滚动，纯净全屏展示海报 */
         html, body { 
             margin: 0; padding: 0; width: 100%; height: 100%; 
-            background: #050508; overflow: hidden; 
+            background: #0b110e; overflow: hidden; 
             display: flex; align-items: center; justify-content: center;
         }
         
-        /* 广告海报容器 */
+        /* 容器严格贴合海报比例 */
         .poster-container { 
             position: relative; 
             width: 100%; 
@@ -28,36 +27,40 @@
             display: block; 
         }
 
-        /* 覆盖在右下角 TG 图标上的专属呼吸点击层 */
+        /* 严格对齐原图右下角圆角矩形图标的呼吸点击层 */
         .tg-pulse-overlay {
             position: absolute;
-            right: 11%;
-            bottom: 19%;
-            width: 16%;
-            height: 16%;
-            border-radius: 50%;
+            right: 8%;         /* 右边距精准定位 */
+            bottom: 17%;       /* 底边距精准定位 */
+            width: 25%;        /* 宽度完美覆盖白框 */
+            height: 14%;       /* 高度完美覆盖白框 */
+            border-radius: 18px; /* 吻合原图的圆角形状 */
             cursor: pointer;
             z-index: 10;
-            /* 按钮扩散与缩小呼吸特效 */
-            animation: tgBreathe 1.5s infinite ease-in-out;
+            
+            /* 【提示】下面这行可以让热区变成半透明红框，方便你部署时肉眼检查是否对齐。检查满意后，把红色改成 transparent 即可 */
+            background: rgba(255, 0, 0, 0.3); 
+            
+            /* 针对圆角矩形框的流光发光呼吸动效 */
+            animation: tgBoxBreathe 2s infinite ease-in-out;
         }
 
-        @keyframes tgBreathe {
+        @keyframes tgBoxBreathe {
             0% {
+                box-shadow: 0 0 5px 2px rgba(36, 161, 222, 0.5);
                 transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(36, 161, 222, 0.6), inset 0 0 0 0 rgba(36, 161, 222, 0.4);
             }
             50% {
-                transform: scale(1.08);
-                box-shadow: 0 0 20px 8px rgba(36, 161, 222, 0.4), inset 0 0 10px 4px rgba(255, 255, 255, 0.2);
+                box-shadow: 0 0 25px 10px rgba(36, 161, 222, 0.8);
+                transform: scale(1.03); /* 微幅放大，防止剧烈位移错开 */
             }
             100% {
+                box-shadow: 0 0 5px 2px rgba(36, 161, 222, 0.5);
                 transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(36, 161, 222, 0.6), inset 0 0 0 0 rgba(36, 161, 222, 0.4);
             }
         }
 
-        /* 全图兜底点击层（防止用户没点准图标，只要碰了图就能跳转） */
+        /* 全图兜底点击层（点击其他任意地方也跳转） */
         .full-page-click {
             position: absolute;
             top: 0;
@@ -71,7 +74,7 @@
 <body>
 
     <div class="poster-container">
-        <img src="/images/photo_2026-05-20_07-41-22.webp" alt="GOLD 8">
+        <img src="/images/photo_2026-05-20_07-41-21.webp" alt="GOLD 8">
         
         <a href="https://6tjzk.bemobtrcks.com/go/3aca8e8f-0634-4289-9559-5d5508acb1b9?price={{price}}&ctoken={{ctoken}}&zoneid={{zoneid}}&adid={{adid}}&campaignid={{campaignid}}&category={{category}}&geo={{geo}}&cpmbid={{cpmbid}}&lang={{lang}}" class="tg-pulse-overlay" id="tg-glow-zone"></a>
 
@@ -79,7 +82,7 @@
     </div>
 
     <script>
-        // 自动提取可能由广告平台额外透传给落地页的 clickid 参数
+        // 自动提取可能由 HilltopAds 额外透传给落地页的 clickid 参数
         const urlParams = new URLSearchParams(window.location.search);
         const clickid = urlParams.get('clickid');
         if (clickid) {
