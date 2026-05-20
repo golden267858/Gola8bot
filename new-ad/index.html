@@ -2,31 +2,33 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOLD 8 VIP PREMIUM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
-        body, html { 
-            margin: 0; padding: 0; width: 100%; height: 100%; 
-            background: #0d1210; display: flex; justify-content: center; align-items: center; 
+        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { 
+            position: relative; 
+            width: 100%; 
+            max-width: 500px; 
+            aspect-ratio: 1 / 1; 
         }
-        .wrapper { position: relative; width: 100%; max-width: 500px; }
-        img { width: 100%; display: block; }
+        .container img { width: 100%; height: 100%; object-fit: contain; }
         
-        /* 蓝色飞机图标的呼吸热区 */
-        .tg-link { 
+        /* 这是对齐后的热区，百分比计算方式：
+           Left: 71.8% | Top: 67.5% | Width: 15.6% | Height: 13.2%
+           这些数值是基于图片正方形区域的绝对比例
+        */
+        .tg-hotspot { 
             position: absolute; 
-            /* 坐标设定：基于原图的像素点对齐 */
             left: 71.8%; 
-            top: 51.5%; 
+            top: 67.5%; 
             width: 15.6%; 
             height: 13.2%; 
-            z-index: 99; 
+            border-radius: 15px;
             cursor: pointer;
-            border-radius: 12px;
-            /* 呼吸闪光效果，引导用户点击 */
-            animation: breathe 1.5s infinite ease-in-out;
+            z-index: 10;
+            animation: pulse 1.5s infinite ease-in-out;
         }
-        @keyframes breathe {
+        @keyframes pulse {
             0% { box-shadow: 0 0 5px #24A1DE; }
             50% { box-shadow: 0 0 20px #24A1DE; }
             100% { box-shadow: 0 0 5px #24A1DE; }
@@ -34,19 +36,17 @@
     </style>
 </head>
 <body>
-    <div class="wrapper">
-        <img src="/images/photo_2026-05-20_07-41-21.webp" alt="GOLD 8">
-        <a href="#" id="tg-btn" class="tg-link"></a>
+    <div class="container">
+        <img src="/images/photo_2026-05-20_07-41-21.webp">
+        <a href="#" id="tg-btn" class="tg-hotspot"></a>
     </div>
 
     <script>
-        // 获取 URL 里的 clickid，动态绑定给 Telegram 链接
-        const urlParams = new URLSearchParams(window.location.search);
-        const clickid = urlParams.get('clickid') || urlParams.get('clickId');
-        const target = clickid ? `https://t.me/gola8bot?start=${clickid}` : "https://t.me/gola8bot";
-        
-        // 绑定链接
-        document.getElementById('tg-btn').href = target;
+        // 获取 URL 中的 clickid 并绑定
+        const params = new URLSearchParams(window.location.search);
+        const clickid = params.get('clickid') || params.get('clickId');
+        const link = clickid ? `https://t.me/gola8bot?start=${clickid}` : "https://t.me/gola8bot";
+        document.getElementById('tg-btn').href = link;
     </script>
 </body>
 </html>
