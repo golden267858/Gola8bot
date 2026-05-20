@@ -6,52 +6,51 @@
     <title>GOLD 8 VIP</title>
     <style>
         body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .wrapper { width: 100%; max-width: 500px; position: relative; }
+        .wrapper { width: 100%; max-width: 500px; text-align: center; }
+        img { width: 100%; display: block; border-radius: 8px; }
         
-        /* 图片加载优化 */
-        img { width: 100%; display: block; min-height: 300px; background: #111; }
-        
-        /* 强制按钮覆盖整个区域或独立按钮 */
+        /* 按钮样式 */
         .join-btn {
             display: block;
             width: 90%;
-            margin: 15px auto;
-            padding: 15px;
-            text-align: center;
+            margin: 20px auto;
+            padding: 18px 0;
             background: #24A1DE;
             color: #fff;
             text-decoration: none;
             font-size: 20px;
             font-weight: bold;
             border-radius: 12px;
-            box-shadow: 0 0 20px rgba(36, 161, 222, 0.6);
+            box-shadow: 0 0 15px rgba(36, 161, 222, 0.5);
             animation: pulse 1.5s infinite;
         }
-        
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 10px #24A1DE; }
-            50% { transform: scale(1.05); box-shadow: 0 0 25px #24A1DE; }
-            100% { transform: scale(1); box-shadow: 0 0 10px #24A1DE; }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
     <div class="wrapper">
-        <img src="/images/photo_2026-05-20_07-41-21.webp" alt="Loading..." loading="eager">
+        <a id="img-link" href="https://t.me/gola8bot">
+            <img src="/images/photo_2026-05-20_07-41-21.webp" alt="GOLD 8">
+        </a>
         
-        <a href="#" id="main-link" class="join-btn">
+        <a id="btn-link" class="join-btn" href="https://t.me/gola8bot">
             ဆက်သွယ်ရန် (JOIN NOW)
         </a>
     </div>
 
     <script>
-        // 确保页面加载完后立刻绑定，防止点不动
-        window.onload = function() {
-            const params = new URLSearchParams(window.location.search);
-            const clickid = params.get('clickid') || params.get('clickId');
-            const target = clickid ? `https://t.me/gola8bot?start=${clickid}` : "https://t.me/gola8bot";
-            document.getElementById('main-link').href = target;
-        };
+        // 动态注入 clickid
+        const params = new URLSearchParams(window.location.search);
+        const clickid = params.get('clickid') || params.get('clickId');
+        if (clickid) {
+            const finalUrl = `https://t.me/gola8bot?start=${clickid}`;
+            document.getElementById('img-link').href = finalUrl;
+            document.getElementById('btn-link').href = finalUrl;
+        }
     </script>
 </body>
 </html>
