@@ -6,7 +6,6 @@
     <title>GOLD 8 VIP</title>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <style>
-        /* 全局高端暗黑底色，使用原生系统级无衬线字体 */
         body { 
             margin: 0; 
             background-color: #000000; 
@@ -24,7 +23,6 @@
             box-sizing: border-box; 
         }
         
-        /* 承接海报：完美圆角切边与大厂质感阴影 */
         .poster { 
             width: 100%; 
             border-radius: 14px; 
@@ -37,7 +35,7 @@
             background-color: #0d1210;
         }
         
-        /* 核心 CTA 按钮：官方 TG 蓝 + 丝滑高级感呼吸光晕 */
+        /* 核心 CTA 按钮：官方 TG 蓝 + 高级感缓动呼吸光晕 */
         .btn-link {
             display: flex; 
             align-items: center; 
@@ -54,7 +52,7 @@
             animation: premium-pulse 1.8s infinite ease-in-out;
         }
         
-        /* 真正的官方规范：纯白实心圆圈底座 */
+        /* 纯白实心圆圈底座 */
         .tg-circle {
             width: 30px; 
             height: 30px; 
@@ -67,15 +65,14 @@
             flex-shrink: 0;
         }
         
-        /* 官方正版 Telegram 纸飞机精准矢量路径 */
+        /* 官方原版纸飞机 SVG */
         .tg-icon { 
             width: 16px; 
             height: 16px; 
             fill: #24A1DE; 
-            margin-left: -1px; /* 修正纸飞机天然的视觉重心偏右问题，使其绝对居中 */
+            margin-left: -1px; /* 修正纸飞机天然视觉重心偏右的问题 */
         }
         
-        /* 拒绝廉价抖动，只做优雅微扩和深层光晕扩散的商业级呼吸动画 */
         @keyframes premium-pulse {
             0% { 
                 transform: scale(1);
@@ -109,9 +106,14 @@
     </div>
 
     <script>
-        // 核心追踪：全量抓取当前 URL 上的所有买量参数（如 clickid 等），通过绝对路径透传给你的后端路由
+        // 修改的核心部分：拿到了你的 urlParams 核心逻辑
         (function() {
             const urlParams = new URLSearchParams(window.location.search);
+            
+            /* 【注意】这里绝对不能写 window.location.href = ... 
+               我们要把拼接好的完整参数，悄悄注入到按钮的 href 属性里。
+               这样页面不会自动乱跳，图片能完美展示，用户一点击，带参数的直连流量稳稳送去后台！
+            */
             document.getElementById('cta-btn').href = "https://golden267858.us.ci/tg?" + urlParams.toString();
         })();
     </script>
