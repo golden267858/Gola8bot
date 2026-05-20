@@ -1,98 +1,52 @@
 <!DOCTYPE html>
-<html lang="my">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Loading...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOLD 8 VIP PREMIUM</title>
     <style>
-        /* 极致纯净底色，防止任何白边穿帮 */
-        html, body { 
+        body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%; 
-            background: #0d1210; overflow: hidden;
-            display: flex; align-items: center; justify-content: center;
+            background: #0d1210; display: flex; justify-content: center; align-items: center; 
         }
+        .wrapper { position: relative; width: 100%; max-width: 500px; }
+        img { width: 100%; display: block; }
         
-        /* 1:1 严格比例锁定海报容器，彻底干掉长短屏手机造成的位移拉伸错位 */
-        .poster-container { 
-            position: relative; 
-            width: 100%; 
-            max-width: 500px; 
-            aspect-ratio: 1 / 1; 
-            box-sizing: border-box;
-        }
-        
-        .poster-container img { 
-            width: 100%; 
-            height: 100%; 
-            display: block; 
-            object-fit: contain;
-        }
-
-        /* 纯像素比例换算——完全基于海报左上角精准锁定右下角 TG 按钮 */
-        .tg-pulse-overlay {
-            position: absolute;
-            left: 71.8%;       /* 精准贴合原图二维码白框左侧比例 */
-            top: 51.5%;        /* 精准贴合原图二维码白框上侧比例 */
-            width: 15.6%;      /* 宽度完美卡准 */
-            height: 13.2%;     /* 高度完美卡准 */
-            border-radius: 12px;
+        /* 蓝色飞机图标的呼吸热区 */
+        .tg-link { 
+            position: absolute; 
+            /* 坐标设定：基于原图的像素点对齐 */
+            left: 71.8%; 
+            top: 51.5%; 
+            width: 15.6%; 
+            height: 13.2%; 
+            z-index: 99; 
             cursor: pointer;
-            z-index: 10;
-            
-            /* 🔴 采用完全透明底色，隐藏测试红框，确保天衣无缝 */
-            background: transparent; 
-            
-            /* 蓝色脉冲霓虹发光呼吸动效 */
-            animation: tgBoxBreathe 1.5s infinite ease-in-out;
+            border-radius: 12px;
+            /* 呼吸闪光效果，引导用户点击 */
+            animation: breathe 1.5s infinite ease-in-out;
         }
-
-        @keyframes tgBoxBreathe {
-            0% { box-shadow: 0 0 6px 2px rgba(36, 161, 222, 0.6); }
-            50% { box-shadow: 0 0 25px 12px rgba(36, 161, 222, 0.9); }
-            100% { box-shadow: 0 0 6px 2px rgba(36, 161, 222, 0.6); }
-        }
-
-        /* 全屏盲点兜底点击层 */
-        .full-page-click {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 5;
+        @keyframes breathe {
+            0% { box-shadow: 0 0 5px #24A1DE; }
+            50% { box-shadow: 0 0 20px #24A1DE; }
+            100% { box-shadow: 0 0 5px #24A1DE; }
         }
     </style>
 </head>
 <body>
-
-    <div class="poster-container">
+    <div class="wrapper">
         <img src="/images/photo_2026-05-20_07-41-21.webp" alt="GOLD 8">
-        
-        <a href="https://t.me/gola8bot" class="tg-pulse-overlay" id="tg-glow-zone"></a>
-
-        <a href="https://t.me/gola8bot" class="full-page-click" id="bg-click-zone"></a>
+        <a href="#" id="tg-btn" class="tg-link"></a>
     </div>
 
     <script>
-        // 1. 自动截取当前来自 BeMob 的所有参数
+        // 获取 URL 里的 clickid，动态绑定给 Telegram 链接
         const urlParams = new URLSearchParams(window.location.search);
-        // 不管参数是大写 clickId 还是小写 clickid，全部兼容抓取
         const clickid = urlParams.get('clickid') || urlParams.get('clickId');
+        const target = clickid ? `https://t.me/gola8bot?start=${clickid}` : "https://t.me/gola8bot";
         
-        // 2. 默认跳转目标（如果抓不到 clickid，就进入纯机器人干净链接）
-        let targetUrl = "https://t.me/gola8bot";
-        
-        // 3. 如果成功抓取到了点击 ID，自动改写为可以用来进行 BeMob 后台 Postback 回传的 start 格式
-        if (clickid) {
-            targetUrl = `https://t.me/gola8bot?start=${clickid}`;
-        }
-
-        // 4. 将前台的所有热区和盲区全部死死绑定到这个直接进 Telegram 的链接上
-        document.getElementById('tg-glow-zone').href = targetUrl;
-        document.getElementById('bg-click-zone').href = targetUrl;
-
-        // 5. 核心策略：不再发给坑人的边缘函数，直接让前端浏览器秒切跳转进 Telegram 机器人！
-        window.location.href = targetUrl;
+        // 绑定链接
+        document.getElementById('tg-btn').href = target;
     </script>
 </body>
 </html>
