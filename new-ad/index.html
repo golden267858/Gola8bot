@@ -5,45 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GOLD 8 VIP</title>
     <style>
-        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif; }
         .wrapper { width: 100%; max-width: 500px; text-align: center; }
-        img { width: 100%; display: block; border-radius: 8px; }
-        
-        /* 按钮样式 */
+        /* 这里的路径改成了相对路径，图片将直接从你的 CF 节点读取 */
+        img { width: 100%; display: block; border-radius: 8px; background: #111; }
         .join-btn {
-            display: block;
-            width: 90%;
-            margin: 20px auto;
-            padding: 18px 0;
-            background: #24A1DE;
-            color: #fff;
-            text-decoration: none;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 12px;
+            display: block; width: 90%; margin: 20px auto; padding: 18px 0;
+            background: #24A1DE; color: #fff; text-decoration: none;
+            font-size: 20px; font-weight: bold; border-radius: 12px;
             box-shadow: 0 0 15px rgba(36, 161, 222, 0.5);
-            animation: pulse 1.5s infinite;
+            animation: pulse 1.5s infinite ease-in-out;
         }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-            100% { transform: scale(1); }
-        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
     <div class="wrapper">
         <a id="img-link" href="https://t.me/gola8bot">
-            <img src="/images/photo_2026-05-20_07-41-21.webp" alt="GOLD 8">
+            <img src="photo_2026-05-20_07-41-21.webp" alt="GOLD 8">
         </a>
-        
         <a id="btn-link" class="join-btn" href="https://t.me/gola8bot">
             ဆက်သွယ်ရန် (JOIN NOW)
         </a>
     </div>
 
     <script>
-        // 动态注入 clickid
         const params = new URLSearchParams(window.location.search);
         const clickid = params.get('clickid') || params.get('clickId');
         if (clickid) {
