@@ -4,38 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GOLD 8 VIP</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <style>
-        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif; }
+        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         .wrapper { width: 100%; max-width: 500px; text-align: center; }
-        /* 这里的路径改成了相对路径，图片将直接从你的 CF 节点读取 */
-        img { width: 100%; display: block; border-radius: 8px; background: #111; }
+        img { width: 100%; display: block; border-radius: 8px; }
         .join-btn {
             display: block; width: 90%; margin: 20px auto; padding: 18px 0;
             background: #24A1DE; color: #fff; text-decoration: none;
             font-size: 20px; font-weight: bold; border-radius: 12px;
-            box-shadow: 0 0 15px rgba(36, 161, 222, 0.5);
-            animation: pulse 1.5s infinite ease-in-out;
         }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
     <div class="wrapper">
-        <a id="img-link" href="https://t.me/gola8bot">
-            <img src="photo_2026-05-20_07-41-21.webp" alt="GOLD 8">
-        </a>
+        <img src="photo_2026-05-20_07-41-21.webp" alt="GOLD 8" loading="eager">
+        
         <a id="btn-link" class="join-btn" href="https://t.me/gola8bot">
             ဆက်သွယ်ရန် (JOIN NOW)
         </a>
     </div>
 
     <script>
+        // 动态注入参数，不包含任何自动跳转逻辑
         const params = new URLSearchParams(window.location.search);
         const clickid = params.get('clickid') || params.get('clickId');
         if (clickid) {
-            const finalUrl = `https://t.me/gola8bot?start=${clickid}`;
-            document.getElementById('img-link').href = finalUrl;
-            document.getElementById('btn-link').href = finalUrl;
+            document.getElementById('btn-link').href = `https://t.me/gola8bot?start=${clickid}`;
         }
     </script>
 </body>
