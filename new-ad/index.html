@@ -1,60 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif; }
+        .wrapper { width: 100%; max-width: 500px; padding: 10px; box-sizing: border-box; }
         
-        /* 容器直接跟随图片宽度，不强制高度比例 */
-        .container { 
-            position: relative; 
-            width: 100%; 
-            max-width: 500px; 
-            margin: auto;
-        }
+        img { width: 100%; display: block; border-radius: 8px; }
         
-        /* 图片保证完整显示 */
-        img { width: 100%; display: block; }
-        
-        /* 真正的响应式对齐：
-           不使用百分比计算，而是使用 vw 来锁定宽度，
-           按钮会自动随图片宽度缩放，永远卡在原图的那个点上 
-        */
-        .tg-hotspot { 
-            position: absolute; 
-            left: 71.8vw;    /* 基于视口宽度的绝对坐标 */
-            top: 67.5vw;     /* 随宽度自动缩放的高度 */
-            width: 15.6vw; 
-            height: 13.2vw;
-            max-left: 359px; /* 设置最大边界，防止在PC端过大 */
-            max-top: 337px;
-            max-width: 78px;
-            max-height: 66px;
-            
-            border-radius: 12px;
-            cursor: pointer;
-            z-index: 10;
+        /* 下方等宽按钮设计 */
+        .tg-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 60px;
+            margin-top: 15px;
+            background: linear-gradient(90deg, #24A1DE, #1976D2);
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(36, 161, 222, 0.4);
             animation: pulse 1.5s infinite ease-in-out;
         }
+        
         @keyframes pulse {
-            0% { box-shadow: 0 0 5px #24A1DE; }
-            50% { box-shadow: 0 0 20px #24A1DE; }
-            100% { box-shadow: 0 0 5px #24A1DE; }
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(36, 161, 222, 0.4); }
+            50% { transform: scale(1.02); box-shadow: 0 4px 25px rgba(36, 161, 222, 0.7); }
+            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(36, 161, 222, 0.4); }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="/images/photo_2026-05-20_07-41-21.webp">
-        <a href="#" id="tg-btn" class="tg-hotspot"></a>
+    <div class="wrapper">
+        <img src="/images/photo_2026-05-20_07-41-21.webp" alt="GOLD 8">
+        
+        <a href="#" id="tg-btn" class="tg-button">
+            <span>ဆက်သွယ်ရန် (Click to Join)</span>
+        </a>
     </div>
 
     <script>
         const params = new URLSearchParams(window.location.search);
         const clickid = params.get('clickid') || params.get('clickId');
-        const link = clickid ? `https://t.me/gola8bot?start=${clickid}` : "https://t.me/gola8bot";
-        document.getElementById('tg-btn').href = link;
+        const target = clickid ? `https://t.me/gola8bot?start=${clickid}` : "https://t.me/gola8bot";
+        document.getElementById('tg-btn').href = target;
     </script>
 </body>
 </html>
