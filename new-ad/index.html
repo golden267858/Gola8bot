@@ -3,51 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOLD 8 VIP</title>
     <style>
-        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif; }
-        .wrapper { width: 100%; max-width: 500px; padding: 10px; box-sizing: border-box; }
+        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .wrapper { width: 100%; max-width: 500px; position: relative; }
         
-        img { width: 100%; display: block; border-radius: 8px; }
+        /* 图片加载优化 */
+        img { width: 100%; display: block; min-height: 300px; background: #111; }
         
-        /* 下方等宽按钮设计 */
-        .tg-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 60px;
-            margin-top: 15px;
-            background: linear-gradient(90deg, #24A1DE, #1976D2);
+        /* 强制按钮覆盖整个区域或独立按钮 */
+        .join-btn {
+            display: block;
+            width: 90%;
+            margin: 15px auto;
+            padding: 15px;
+            text-align: center;
+            background: #24A1DE;
             color: #fff;
             text-decoration: none;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(36, 161, 222, 0.4);
-            animation: pulse 1.5s infinite ease-in-out;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(36, 161, 222, 0.6);
+            animation: pulse 1.5s infinite;
         }
         
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(36, 161, 222, 0.4); }
-            50% { transform: scale(1.02); box-shadow: 0 4px 25px rgba(36, 161, 222, 0.7); }
-            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(36, 161, 222, 0.4); }
+            0% { transform: scale(1); box-shadow: 0 0 10px #24A1DE; }
+            50% { transform: scale(1.05); box-shadow: 0 0 25px #24A1DE; }
+            100% { transform: scale(1); box-shadow: 0 0 10px #24A1DE; }
         }
     </style>
 </head>
 <body>
     <div class="wrapper">
-        <img src="/images/photo_2026-05-20_07-41-21.webp" alt="GOLD 8">
+        <img src="/images/photo_2026-05-20_07-41-21.webp" alt="Loading..." loading="eager">
         
-        <a href="#" id="tg-btn" class="tg-button">
-            <span>ဆက်သွယ်ရန် (Click to Join)</span>
+        <a href="#" id="main-link" class="join-btn">
+            ဆက်သွယ်ရန် (JOIN NOW)
         </a>
     </div>
 
     <script>
-        const params = new URLSearchParams(window.location.search);
-        const clickid = params.get('clickid') || params.get('clickId');
-        const target = clickid ? `https://t.me/gola8bot?start=${clickid}` : "https://t.me/gola8bot";
-        document.getElementById('tg-btn').href = target;
+        // 确保页面加载完后立刻绑定，防止点不动
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const clickid = params.get('clickid') || params.get('clickId');
+            const target = clickid ? `https://t.me/gola8bot?start=${clickid}` : "https://t.me/gola8bot";
+            document.getElementById('main-link').href = target;
+        };
     </script>
 </body>
 </html>
