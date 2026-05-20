@@ -6,32 +6,111 @@
     <title>GOLD 8 VIP</title>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <style>
-        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .wrapper { width: 100%; max-width: 500px; text-align: center; }
-        img { width: 100%; display: block; border-radius: 8px; }
-        .join-btn {
-            display: block; width: 90%; margin: 20px auto; padding: 18px 0;
-            background: #24A1DE; color: #fff; text-decoration: none;
-            font-size: 20px; font-weight: bold; border-radius: 12px;
+        body { 
+            margin: 0; 
+            background-color: #000000; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+        }
+        
+        .container { 
+            width: 100%; 
+            max-width: 460px; 
+            padding: 16px; 
+            box-sizing: border-box; 
+        }
+        
+        .poster { 
+            width: 100%; 
+            border-radius: 14px; 
+            overflow: hidden; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+        .poster img { 
+            width: 100%; 
+            display: block; 
+            background-color: #0d1210;
+        }
+        
+        /* 蓝色核心按钮 + 丝滑呼吸光晕 */
+        .btn-link {
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            height: 56px; 
+            margin-top: 24px;
+            background-color: #24A1DE; 
+            color: #ffffff;
+            text-decoration: none; 
+            border-radius: 12px;
+            font-size: 19px; 
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(36, 161, 222, 0.4);
+            animation: premium-pulse 1.8s infinite ease-in-out;
+        }
+        
+        /* 纯白实心圆圈底座 */
+        .tg-circle {
+            width: 30px; 
+            height: 30px; 
+            background-color: #ffffff;
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        /* Telegram 官方纸飞机 SVG */
+        .tg-icon { 
+            width: 16px; 
+            height: 16px; 
+            fill: #24A1DE; 
+            margin-left: -1px; 
+        }
+        
+        @keyframes premium-pulse {
+            0% { 
+                transform: scale(1);
+                box-shadow: 0 4px 14px rgba(36, 161, 222, 0.4); 
+            }
+            50% { 
+                transform: scale(1.02);
+                box-shadow: 0 6px 28px rgba(36, 161, 222, 0.75); 
+            }
+            100% { 
+                transform: scale(1);
+                box-shadow: 0 4px 14px rgba(36, 161, 222, 0.4); 
+            }
         }
     </style>
 </head>
 <body>
-    <div class="wrapper">
-        <img src="/images/photo_2026-05-20_07-41-21.webp" alt="GOLD 8" loading="eager">
+    <div class="container">
+        <div class="poster">
+            <img src="/images/photo_2026-05-20_07-41-21.webp" alt="GOLD 8 Promo">
+        </div>
         
-        <a id="btn-link" class="join-btn" href="https://t.me/gola8bot">
-            ဆက်သွယ်ရန် (JOIN NOW)
+        <a id="cta-btn" href="/tg" class="btn-link">
+            <div class="tg-circle">
+                <svg class="tg-icon" viewBox="0 0 24 24">
+                    <path d="M21.42 2.62a1 1 0 0 0-.91-.18L2.39 8.76a1 1 0 0 0-.07 1.86l4.63 1.59 2.2 6.6A1 1 0 0 0 10.1 19a1 1 0 0 0 .7-.3l2.84-2.73 4.83 3.56a1 1 0 0 0 1.53-.56l4.15-16a1 1 0 0 0-.73-1.35zM9.36 14.13l-.53-1.6 8.35-5.22-6.19 6.22-.05.15-1.58 1.51v-.06z"/>
+                </svg>
+            </div>
+            <span>ဆက်သွယ်ရန်</span>
         </a>
     </div>
 
     <script>
-        // 动态注入参数，不包含任何自动跳转逻辑
-        const params = new URLSearchParams(window.location.search);
-        const clickid = params.get('clickid') || params.get('clickId');
-        if (clickid) {
-            document.getElementById('btn-link').href = `https://t.me/gola8bot?start=${clickid}`;
-        }
+        // 抓取当前页面所有参数并完美透传至本地 /tg 路由
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            document.getElementById('cta-btn').href = "/tg?" + urlParams.toString();
+        })();
     </script>
 </body>
 </html>
