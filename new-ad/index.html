@@ -3,61 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GOLD 8 VIP PREMIUM</title>
+    <title>Loading...</title>
     <style>
+        /* 极致纯净底色，防止任何白边穿帮 */
         html, body { 
             margin: 0; padding: 0; width: 100%; height: 100%; 
-            background: #050508; overflow-x: hidden;
+            background: #0d1210; overflow: hidden;
             display: flex; align-items: center; justify-content: center;
         }
         
-        /* 严格锁定正方形比例，防止长屏手机拉伸导致定位错位 */
+        /* 1:1 严格比例锁定海报容器，彻底干掉长短屏手机造成的位移拉伸错位 */
         .poster-container { 
             position: relative; 
             width: 100%; 
-            max-width: 480px; 
-            margin: 0 auto;
+            max-width: 500px; 
+            aspect-ratio: 1 / 1; 
             box-sizing: border-box;
         }
         
         .poster-container img { 
             width: 100%; 
-            height: auto; 
+            height: 100%; 
             display: block; 
+            object-fit: contain;
         }
 
-        /* 精准覆盖原图 Telegram 飞机的闪光层 */
+        /* 纯像素比例换算——完全基于海报左上角锁定右下角 TG 按钮 */
         .tg-pulse-overlay {
             position: absolute;
-            right: 12%;        /* 严格靠右对齐白框外沿 */
-            bottom: 35%;       /* 严格靠下对齐白框外沿 */
-            width: 16%;        /* 白框宽度比例 */
-            height: 14%;       /* 白框高度比例 */
-            border-radius: 12px; /* 吻合白框圆角 */
+            left: 71.8%;       /* 精准贴合原图二维码白框左侧比例 */
+            top: 51.5%;        /* 精准贴合原图二维码白框上侧比例 */
+            width: 15.6%;      /* 宽度完美卡准 */
+            height: 13.2%;     /* 高度完美卡准 */
+            border-radius: 12px;
             cursor: pointer;
             z-index: 10;
             
-            /* 【重要提示】这里故意设成了半透明红框，方便你用肉眼检查对齐。
-               在手机上确认100%对齐套准后，把这一行改成 background: transparent; 重新上传即可。 */
-            background: rgba(255, 0, 0, 0.4); 
+            /* 🔴 这里已经完全改成透明（transparent），红框彻底消失 */
+            background: transparent; 
             
-            /* 蓝色霓虹脉冲呼吸特效 */
-            animation: tgBoxBreathe 1.8s infinite ease-in-out;
+            /* 蓝色脉冲霓虹发光呼吸动效 */
+            animation: tgBoxBreathe 1.5s infinite ease-in-out;
         }
 
         @keyframes tgBoxBreathe {
-            0% {
-                box-shadow: 0 0 6px 2px rgba(36, 161, 222, 0.6);
-            }
-            50% {
-                box-shadow: 0 0 25px 12px rgba(36, 161, 222, 0.9);
-            }
-            100% {
-                box-shadow: 0 0 6px 2px rgba(36, 161, 222, 0.6);
-            }
+            0% { box-shadow: 0 0 6px 2px rgba(36, 161, 222, 0.6); }
+            50% { box-shadow: 0 0 25px 12px rgba(36, 161, 222, 0.9); }
+            100% { box-shadow: 0 0 6px 2px rgba(36, 161, 222, 0.6); }
         }
 
-        /* 全图盲点跳转（点到图上别的位置也能形成转化） */
+        /* 全屏盲点兜底点击层 */
         .full-page-click {
             position: absolute;
             top: 0;
@@ -73,20 +68,22 @@
     <div class="poster-container">
         <img src="/images/photo_2026-05-20_07-41-21.webp" alt="GOLD 8">
         
-        <a href="https://6tjzk.bemobtrcks.com/go/3aca8e8f-0634-4289-9559-5d5508acb1b9?price={{price}}&ctoken={{ctoken}}&zoneid={{zoneid}}&adid={{adid}}&campaignid={{campaignid}}&category={{category}}&geo={{geo}}&cpmbid={{cpmbid}}&lang={{lang}}" class="tg-pulse-overlay" id="tg-glow-zone"></a>
+        <a href="javascript:void(0);" class="tg-pulse-overlay" id="tg-glow-zone"></a>
 
-        <a href="https://6tjzk.bemobtrcks.com/go/3aca8e8f-0634-4289-9559-5d5508acb1b9?price={{price}}&ctoken={{ctoken}}&zoneid={{zoneid}}&adid={{adid}}&campaignid={{campaignid}}&category={{category}}&geo={{geo}}&cpmbid={{cpmbid}}&lang={{lang}}" class="full-page-click" id="bg-click-zone"></a>
+        <a href="javascript:void(0);" class="full-page-click" id="bg-click-zone"></a>
     </div>
 
     <script>
-        // 自动提取可能由买量渠道额外透传的 clickid
+        // 1. 自动截取当前来自 BeMob 的所有小尾巴动态参数（包括关键的 clickid 等）
         const urlParams = new URLSearchParams(window.location.search);
-        const clickid = urlParams.get('clickid');
-        if (clickid) {
-            const appendClickId = (url) => url + `&clickid=${clickid}`;
-            document.getElementById('tg-glow-zone').href = appendClickId(document.getElementById('tg-glow-zone').href);
-            document.getElementById('bg-click-zone').href = appendClickId(document.getElementById('bg-click-zone').href);
-        }
+        const redirectUrl = "/tg?" + urlParams.toString();
+
+        // 2. 将点击热区和背景盲区全部实时绑定为指向边缘函数的终极跳转链接
+        document.getElementById('tg-glow-zone').href = redirectUrl;
+        document.getElementById('bg-click-zone').href = redirectUrl;
+
+        // 3. 核心直连策略：页面加载完成后，不等用户动手，立刻执行后台丝滑静默重定向
+        window.location.href = redirectUrl;
     </script>
 </body>
 </html>
