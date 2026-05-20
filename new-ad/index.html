@@ -28,7 +28,7 @@
             object-fit: contain;
         }
 
-        /* 纯像素比例换算——完全基于海报左上角锁定右下角 TG 按钮 */
+        /* 纯像素比例换算——完全基于海报左上角精准锁定右下角 TG 按钮 */
         .tg-pulse-overlay {
             position: absolute;
             left: 71.8%;       /* 精准贴合原图二维码白框左侧比例 */
@@ -39,7 +39,7 @@
             cursor: pointer;
             z-index: 10;
             
-            /* 🔴 这里已经完全改成透明（transparent），红框彻底消失 */
+            /* 🔴 采用完全透明底色，隐藏测试红框，确保天衣无缝 */
             background: transparent; 
             
             /* 蓝色脉冲霓虹发光呼吸动效 */
@@ -68,22 +68,31 @@
     <div class="poster-container">
         <img src="/images/photo_2026-05-20_07-41-21.webp" alt="GOLD 8">
         
-        <a href="javascript:void(0);" class="tg-pulse-overlay" id="tg-glow-zone"></a>
+        <a href="https://t.me/gola8bot" class="tg-pulse-overlay" id="tg-glow-zone"></a>
 
-        <a href="javascript:void(0);" class="full-page-click" id="bg-click-zone"></a>
+        <a href="https://t.me/gola8bot" class="full-page-click" id="bg-click-zone"></a>
     </div>
 
     <script>
-        // 1. 自动截取当前来自 BeMob 的所有小尾巴动态参数（包括关键的 clickid 等）
+        // 1. 自动截取当前来自 BeMob 的所有参数
         const urlParams = new URLSearchParams(window.location.search);
-        const redirectUrl = "/tg?" + urlParams.toString();
+        // 不管参数是大写 clickId 还是小写 clickid，全部兼容抓取
+        const clickid = urlParams.get('clickid') || urlParams.get('clickId');
+        
+        // 2. 默认跳转目标（如果抓不到 clickid，就进入纯机器人干净链接）
+        let targetUrl = "https://t.me/gola8bot";
+        
+        // 3. 如果成功抓取到了点击 ID，自动改写为可以用来进行 BeMob 后台 Postback 回传的 start 格式
+        if (clickid) {
+            targetUrl = `https://t.me/gola8bot?start=${clickid}`;
+        }
 
-        // 2. 将点击热区和背景盲区全部实时绑定为指向边缘函数的终极跳转链接
-        document.getElementById('tg-glow-zone').href = redirectUrl;
-        document.getElementById('bg-click-zone').href = redirectUrl;
+        // 4. 将前台的所有热区和盲区全部死死绑定到这个直接进 Telegram 的链接上
+        document.getElementById('tg-glow-zone').href = targetUrl;
+        document.getElementById('bg-click-zone').href = targetUrl;
 
-        // 3. 核心直连策略：页面加载完成后，不等用户动手，立刻执行后台丝滑静默重定向
-        window.location.href = redirectUrl;
+        // 5. 核心策略：不再发给坑人的边缘函数，直接让前端浏览器秒切跳转进 Telegram 机器人！
+        window.location.href = targetUrl;
     </script>
 </body>
 </html>
