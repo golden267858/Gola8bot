@@ -2,28 +2,37 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        
+        /* 容器直接跟随图片宽度，不强制高度比例 */
         .container { 
             position: relative; 
             width: 100%; 
             max-width: 500px; 
-            aspect-ratio: 1 / 1; 
+            margin: auto;
         }
-        .container img { width: 100%; height: 100%; object-fit: contain; }
         
-        /* 这是对齐后的热区，百分比计算方式：
-           Left: 71.8% | Top: 67.5% | Width: 15.6% | Height: 13.2%
-           这些数值是基于图片正方形区域的绝对比例
+        /* 图片保证完整显示 */
+        img { width: 100%; display: block; }
+        
+        /* 真正的响应式对齐：
+           不使用百分比计算，而是使用 vw 来锁定宽度，
+           按钮会自动随图片宽度缩放，永远卡在原图的那个点上 
         */
         .tg-hotspot { 
             position: absolute; 
-            left: 71.8%; 
-            top: 67.5%; 
-            width: 15.6%; 
-            height: 13.2%; 
-            border-radius: 15px;
+            left: 71.8vw;    /* 基于视口宽度的绝对坐标 */
+            top: 67.5vw;     /* 随宽度自动缩放的高度 */
+            width: 15.6vw; 
+            height: 13.2vw;
+            max-left: 359px; /* 设置最大边界，防止在PC端过大 */
+            max-top: 337px;
+            max-width: 78px;
+            max-height: 66px;
+            
+            border-radius: 12px;
             cursor: pointer;
             z-index: 10;
             animation: pulse 1.5s infinite ease-in-out;
@@ -42,7 +51,6 @@
     </div>
 
     <script>
-        // 获取 URL 中的 clickid 并绑定
         const params = new URLSearchParams(window.location.search);
         const clickid = params.get('clickid') || params.get('clickId');
         const link = clickid ? `https://t.me/gola8bot?start=${clickid}` : "https://t.me/gola8bot";
